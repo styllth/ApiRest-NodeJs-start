@@ -1,0 +1,7 @@
+{
+  "name": "ApiNodeJs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Styllth Saraiva Ribeiro <styllth@yahoo.com.br>",
+  "license": "MIT"
+}
