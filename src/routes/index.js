@@ -9,10 +9,10 @@ routes.get('/', (request, response) => {
     return response.send('<h1>Api funcionando</h1>');
 });
 
-routes.use(authRoutes);
+routes.use('/auth', authRoutes);
 
 routes.use(authMiddleware);
 
-routes.use(projectsRoutes);
+routes.use('/projects', projectsRoutes);
 
 module.exports = routes;
