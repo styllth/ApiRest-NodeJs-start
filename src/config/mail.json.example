@@ -1,0 +1,6 @@
+{
+    "host": "<smtp.host>",
+    "port": "<port number>",
+    "user": "<username>",
+    "pass": "<password>"
+}

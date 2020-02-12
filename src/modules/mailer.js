@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
 const path = require('path');
 
-const { host, port, user, pass, proxy } = require(`../config/mail/mailtrap`);
+const { host, port, user, pass, proxy } = require(`../config/mail`);
 
 const options = {
     viewEngine: {
