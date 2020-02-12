@@ -29,7 +29,8 @@ Resumindo, RESTful é a capacidade de determinado sistema aplicar os princípios
 
 - $ yarn
 - $ cp src/config/mail.json.example src/config/mail.json
-- $ php artisan key:generate
-- $ php artisan migrate
-- $ php artisan passport:install
+
+# Testes
+
+- $ yarn dev
 
