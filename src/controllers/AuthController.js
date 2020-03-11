@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const bcriptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -13,6 +14,7 @@ function generateToken(params = {}) {
 }
 
 module.exports = {
+    // localhost/auth/register
     async register(request, response) {
         const { email } = request.body;
         try {
@@ -37,7 +39,7 @@ module.exports = {
         }
     },
 
-    // eslint-disable-next-line consistent-return
+    // localhost/auth/login
     async authenticate(request, response) {
         const { email, password } = request.body;
 
@@ -59,7 +61,7 @@ module.exports = {
         });
     },
 
-    // eslint-disable-next-line consistent-return
+    // localhost/auth/forgot_password
     async forgot_password(request, response) {
         const { email } = request.body;
 
@@ -86,7 +88,7 @@ module.exports = {
             mailer.sendMail(
                 {
                     to: email,
-                    form: 'no-replay@mail.com',
+                    from: 'no-replay@mail.com',
                     template: '/auth/fotgot_password',
                     context: { token },
                 },
@@ -98,7 +100,9 @@ module.exports = {
                                 'Falha ao enviar o email de senha esquecida!',
                         });
                     }
-                    return response.send();
+                    return response.status(200).send({
+                        sucess: 'Verifique sua caixa de correio',
+                    });
                 }
             );
         } catch (err) {
@@ -109,7 +113,7 @@ module.exports = {
         }
     },
 
-    // eslint-disable-next-line consistent-return
+    // localhost/auth/reset_password
     async reset_password(request, response) {
         const { email, token, password } = request.body;
 
@@ -137,7 +141,9 @@ module.exports = {
 
             await user.save();
 
-            return response.send();
+            return response.status(201).send({
+                sucess: 'Senha atualizada com sucesso',
+            });
         } catch (err) {
             console.log(err);
             return response.status(400).send({
