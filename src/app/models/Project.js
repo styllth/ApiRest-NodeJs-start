@@ -1,4 +1,4 @@
-const mongoose = require('../database');
+import mongoose from '../../database/mongo';
 
 // características do project
 const ProjectSchema = new mongoose.Schema({

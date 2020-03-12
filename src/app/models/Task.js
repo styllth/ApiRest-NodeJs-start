@@ -1,4 +1,4 @@
-const mongoose = require('../database');
+import mongoose from '../../database/mongo';
 
 // características das tasks
 const TaskSchema = new mongoose.Schema({

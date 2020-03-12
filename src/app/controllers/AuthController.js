@@ -2,8 +2,8 @@
 const bcriptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const mailer = require('../modules/mailer');
-const User = require('../models/User');
+const mailer = require('../../modules/mailer');
+const User = require('../../app/models/User').default;
 require('dotenv').config();
 
 function generateToken(params = {}) {
