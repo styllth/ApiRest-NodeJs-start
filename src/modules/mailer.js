@@ -1,8 +1,7 @@
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
 const path = require('path');
-
-const { host, port, user, pass, proxy } = require(`../config/mail`);
+require('dotenv').config();
 
 const options = {
     viewEngine: {
@@ -16,11 +15,14 @@ const options = {
 };
 
 const transport = nodemailer.createTransport({
-    host,
-    port,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     // secure: true, // true for 465, false for other ports
-    auth: { user, pass },
-    proxy,
+    auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+    },
+    // proxy: process.env.MAIL_PROXY,
     // ssl: true,
 });
 

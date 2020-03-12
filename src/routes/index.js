@@ -1,18 +1,15 @@
 const { Router } = require('express');
-const authMiddleware = require('../middlewares/auth');
 const authRoutes = require('./auth');
 const projectsRoutes = require('./projects');
+const jwtUtils = require('../utils/jwt');
 
 const routes = Router();
 
 routes.get('/', (request, response) => {
-    return response.send('<h1>Api funcionando</h1>');
+    return response.status(200).send({ message: 'Api funcionando' });
 });
 
 routes.use('/auth', authRoutes);
-
-routes.use(authMiddleware);
-
-routes.use('/projects', projectsRoutes);
+routes.use('/projects', jwtUtils.verifyToken, projectsRoutes);
 
 module.exports = routes;
