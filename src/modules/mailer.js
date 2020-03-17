@@ -1,7 +1,8 @@
-const nodemailer = require('nodemailer');
-const hbs = require('nodemailer-express-handlebars');
-const path = require('path');
-require('dotenv').config();
+import nodemailer from 'nodemailer';
+import hbs from 'nodemailer-express-handlebars';
+import path from 'path';
+
+import 'dotenv/config';
 
 const options = {
     viewEngine: {

@@ -7,10 +7,6 @@ import cors from 'cors';
 
 import routes from './routes';
 
-// Uncomment this line to enable database access
-// --------
-// import './database';
-
 class App {
     constructor() {
         this.server = express();

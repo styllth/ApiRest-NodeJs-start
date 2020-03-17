@@ -1,5 +1,5 @@
-const Project = require('../models/Project');
-const Tasks = require('../models/Task');
+import Project from '../models/Project';
+import Tasks from '../models/Task';
 
 module.exports = {
     async index(request, response) {
@@ -22,8 +22,9 @@ module.exports = {
             const project = await Project.create({
                 title,
                 description,
-                user: request.userId,
+                user: request.headers.userId,
             });
+            console.log(project);
 
             await Promise.all(
                 tasks.map(async task => {

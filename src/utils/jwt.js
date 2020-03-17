@@ -1,54 +1,52 @@
 /* eslint-disable consistent-return */
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
-const jwtKey = process.env.JWT_KEY;
+const { env } = process;
 
-function createToken(params = {}, expiry) {
-    return jwt.sign(params, jwtKey, {
-        expiresIn: expiry,
-    });
-}
+const jwtKey = env.JWT_KEY;
+const expires = env.TOKEN_EXPIRES;
 
-function verifyToken(request, response, next) {
-    try {
-        const autHeader = request.headers.authorization;
+module.exports = {
+    createToken(params = {}) {
+        return jwt.sign(params, jwtKey, { expiresIn: expires });
+    },
 
-        if (!autHeader)
-            return response
-                .status(401)
-                .send({ error: 'Token de autenticação ausente!' });
+    verifyToken(request, response, next) {
+        try {
+            const autHeader = request.headers.authorization;
 
-        const parts = autHeader.split(' ');
-        if (!parts.length === 2)
-            return response.status(401).send({ error: 'Erro no Token !' });
+            if (!autHeader)
+                return response
+                    .status(401)
+                    .send({ error: 'Token de autenticação ausente!' });
 
-        const [schema, token] = parts;
+            const parts = autHeader.split(' ');
+            if (!parts.length === 2)
+                return response.status(401).send({ error: 'Erro no Token !' });
 
-        if (!/^Bearer$/i.test(schema))
-            return response.status(401).send({ error: 'Token não formatado' });
+            const [schema, token] = parts;
 
-        jwt.verify(token, jwtKey, (err, decoded) => {
-            if (err)
-                return response.status(401).send({
-                    error: err,
-                    msg: 'Token inválido',
-                });
+            if (!/^Bearer$/i.test(schema))
+                return response
+                    .status(401)
+                    .send({ error: 'Token não formatado' });
 
-            request.headers.userId = decoded.id;
+            jwt.verify(token, jwtKey, (err, decoded) => {
+                if (err)
+                    return response.status(401).send({
+                        error: err,
+                        msg: 'Token inválido',
+                    });
 
-            next();
-        });
-    } catch (err) {
-        return response.status(401).send({
-            error: err,
-        });
-    }
-}
+                request.headers.userId = decoded.id;
 
-const jwtUtils = {
-    createToken,
-    verifyToken,
+                next();
+            });
+        } catch (err) {
+            return response.status(401).send({
+                error: err,
+            });
+        }
+    },
 };
-
-module.exports = jwtUtils;

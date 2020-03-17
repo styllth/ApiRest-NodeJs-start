@@ -1,16 +1,11 @@
 /* eslint-disable consistent-return */
-const bcriptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const mailer = require('../../modules/mailer');
-const User = require('../../app/models/User').default;
-require('dotenv').config();
+import bcriptjs from 'bcryptjs';
+import crypto from 'crypto';
+import { createToken } from '../../utils/jwt';
+import mailer from '../../modules/mailer';
+import User from '../models/User';
 
-function generateToken(params = {}) {
-    return jwt.sign(params, process.env.APP_KEY, {
-        expiresIn: 86400, // 1 dia
-    });
-}
+require('dotenv').config();
 
 module.exports = {
     // localhost/auth/register
@@ -28,7 +23,7 @@ module.exports = {
 
             return response.send({
                 user,
-                token: generateToken({ id: user.id }),
+                token: createToken({ id: user.id }),
             });
         } catch (err) {
             console.log(err);
@@ -56,7 +51,7 @@ module.exports = {
 
         response.send({
             user,
-            token: generateToken({ id: user.id }),
+            token: createToken({ id: user.id }),
         });
     },
 
